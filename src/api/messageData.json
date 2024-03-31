@@ -1,0 +1,45 @@
+{
+    "messages": [
+        {
+            "id": 1,
+            "sender": "hi",
+            "receiver": "Hi there!"
+        },
+        {
+            "id": 2,
+            "sender": "how are you?",
+            "receiver": "I'm doing fine as wine"
+        },
+        {
+            "id": 3,
+            "sender": "good morning",
+            "receiver": "Morning! How are you today?"
+        },
+        {
+            "id": 4,
+            "sender": "what's for lunch?",
+            "receiver": "I'm thinking of grabbing a salad. Want to join?"
+        },
+        {
+            "id": 5,
+            "sender": "sure",
+            "receiver": "Alright hope on!"
+        },
+        {
+            "id": 6,
+            "sender": "see you later",
+            "receiver": "See ya!"
+        },
+        {
+            "id": 7,
+            "sender": "have a good weekend",
+            "receiver": "Thanks, you too!"
+        },
+
+        {
+            "id": 8,
+            "sender": "bye",
+            "receiver": "Good talkin with you. Have a nice day"
+        }
+    ]
+}
