@@ -6,7 +6,7 @@ import { fetchUsers } from "@/utils/fetchUsers";
 import { Button } from "../ui/button";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { addUser, getUsers, initialize } from "@/state/users/usersSlice";
+import { getUsers, initialize } from "@/state/users/usersSlice";
 import UserSkeleton from "./UserSkeleton";
 import NewUser from "./NewUser";
 

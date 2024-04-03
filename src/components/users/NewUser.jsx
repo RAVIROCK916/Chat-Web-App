@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -11,26 +10,35 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useSelector } from "react-redux";
-import { getUsers } from "@/state/users/usersSlice";
+import { addUser } from "@/state/users/usersSlice";
+import User from "@/api/schema/userSchema";
+import { useDispatch } from "react-redux";
 
 const NewUser = () => {
     const [name, setName] = useState({
         first: "",
         last: "",
     });
-    const users = useSelector(getUsers);
+
+    const dispatch = useDispatch();
+
     const handleAddUser = (e) => {
-        users.push();
+        const newUser = new User({
+            name: {
+                first: name.first,
+                last: name.last,
+            },
+        });
+        // dispatch(addUser(newUser));
     };
 
     return (
-        <div className="mb-3 h-10 w-full text-center">
+        <div className="mb-2 h-10 w-full text-center">
             <Dialog>
                 <DialogTrigger className="m-auto" asChild>
                     <Button
                         variant="outline"
-                        className="h-10 w-[88%] bg-zinc-950 text-center text-lg text-slate-200 shadow-lg hover:bg-zinc-900 hover:text-slate-200"
+                        className="h-10 w-full bg-zinc-950 text-center text-lg text-slate-200 shadow-lg hover:bg-zinc-900 hover:text-slate-200"
                     >
                         Create User
                     </Button>

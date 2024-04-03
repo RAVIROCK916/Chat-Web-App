@@ -10,6 +10,7 @@ let usersSlice = createSlice({
             state.value = data.payload;
         },
         addUser: (state, user) => {
+            console.log(user.payload);
             state.value.push(user.payload);
         },
         addMessage: (state, action) => {

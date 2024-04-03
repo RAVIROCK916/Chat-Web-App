@@ -4,16 +4,15 @@ const userSchema = new mongoose.Schema({
     name: {
         first: {
             type: String,
-            required: true
+            required: true,
         },
-        last: {
-            type: String,
-            required: true
-        }
+        last: String,
     },
     picture: String,
     messages: {
         user: [String],
-        friend: [String]
-    }
+        friend: [String],
+    },
 });
+
+export default mongoose.model("User", userSchema);
