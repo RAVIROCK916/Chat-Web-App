@@ -4,21 +4,21 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getCurrUser, setUser } from "@/state/users/currentUserSlice";
 import { Separator } from "../ui/separator";
 
-const User = ({ userD }) => {
-    let { name, picture } = userD;
+const User = ({ user }) => {
+    let { name, picture } = user;
     const currUserId = useSelector(getCurrUser);
     const dispatch = useDispatch();
     return (
         <div
             className="cursor-pointer"
             onClick={() => {
-                dispatch(setUser(userD));
+                dispatch(setUser(user));
             }}
         >
             <Card
                 className="flex items-center rounded-none border-none px-6 py-2 transition-colors duration-100 hover:bg-slate-50"
                 style={
-                    currUserId === userD.id
+                    currUserId === user.id
                         ? {
                               borderLeft: "5px solid #111",
                               backgroundColor: "#f9f9f9",

@@ -1,26 +1,28 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import User from "./User";
 import { fetchUsers } from "@/utils/fetchUsers";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { addUser, getUsers, initialize } from "@/state/users/usersSlice";
+import { getUsers, initialize } from "@/state/users/usersSlice";
 import UserSkeleton from "./UserSkeleton";
 import NewUser from "./NewUser";
 
 const UsersBar = () => {
     let noOfUsers = 15;
     const url = `https://randomuser.me/api/?results=${noOfUsers}&seed=001&inc=name,picture`;
+
     const dispatch = useDispatch();
     const users = useSelector(getUsers);
-    let usersDatabase;
 
+    const [search, setSearch] = useState("");
+    const [filteredUsers, setFilteredUsers] = useState(users);
     const scrollRef = useRef(null);
 
     const initUsers = async () => {
         const userList = await fetchUsers(url);
-        // console.log(Users.find());
+        setFilteredUsers(userList);
         dispatch(initialize(userList));
     };
 
@@ -29,16 +31,15 @@ const UsersBar = () => {
         initUsers();
     }, []);
 
-    // useEffect(() => {
-    //     getUsersData();
-    // }, [usersDatabase]);
-
-    const getUsersData = async () => {
-        const response = await fetch("http://localhost:3000/users");
-        usersDatabase = await response.json();
-        console.log(usersDatabase);
-        // dispatch(addUser(usersDatabase));
-    };
+    useEffect(() => {
+        // if (search.trim() !== "") {
+        const newfilteredUsers = users.filter((user) => {
+            const name = user.name.first + " " + user.name.last;
+            return name.toLowerCase().includes(search.toLowerCase());
+        });
+        setFilteredUsers(newfilteredUsers);
+        // }
+    }, [search, users]);
 
     return (
         <div className="relative flex h-screen flex-col border">
@@ -47,11 +48,15 @@ const UsersBar = () => {
                 <Input
                     className="m-auto h-10 w-[88%] rounded-[40px] px-4 pl-12"
                     placeholder="Search..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                 />
             </div>
             <div className="overflow-auto" ref={scrollRef}>
                 {users.length > 0 ? (
-                    users.map((userD) => <User userD={userD} key={userD.id} />)
+                    filteredUsers.map((user) => (
+                        <User user={user} key={user.id} />
+                    ))
                 ) : (
                     <UserSkeleton />
                 )}
