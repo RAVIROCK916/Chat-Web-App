@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 
 import connectDB from "./api/connection/databaseConnection.js";
 
-import userSchema from "./api/schema/userSchema.js";
+import Users from "./api/schema/userSchema.js";
 
 connectDB();
 
@@ -21,18 +21,25 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-	res.send("Hello World!");
+	res.send("Welcome to the chat app API!");
 });
 
-app.post("/addUser", async (req, res) => {
-	console.log(req.body, "request");
-	await userSchema.create(req.body);
-	console.log(await userSchema.find());
-	res.send("User Added");
+app.get("/users", async (req, res) => {
+	const users = await Users.find();
+
+	res.json(users);
 });
 
-// app.use(cors());
+app.post("/users/add", async (req, res) => {
+	const { name } = req.body;
+	if (name.first || name.last) {
+		await Users.create(req.body);
+		res.status(201).send("User Added");
+	} else {
+		res.status(400).send("Name is required");
+	}
+});
 
 app.listen(3000, () => {
-	console.log("Example app listening on port 3000!");
+	console.log("Chat app listening on port 3000!");
 });

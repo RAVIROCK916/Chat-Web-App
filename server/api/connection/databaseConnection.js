@@ -7,7 +7,8 @@ dotenv.config({ path: "../../../client/.env" });
 
 const connectDB = async () => {
 	try {
-		await mongoose.connect("mongodb://localhost:27017/chat");
+		const conn = await mongoose.connect("mongodb://localhost:27017/chat");
+		console.log(`Connected to MongoDB: ${conn.connection.db.databaseName}`);
 	} catch (err) {
 		console.error(err);
 		// exit process or other error handling

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getCurrUser, setUser } from "@/state/users/currentUserSlice";
 import { Separator } from "../ui/separator";
 

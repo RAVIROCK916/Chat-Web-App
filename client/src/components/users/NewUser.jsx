@@ -10,11 +10,11 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { addUser } from "@/state/users/usersSlice";
-// import User from "@/api/schema/userSchema";
 import { useDispatch } from "react-redux";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { addUser } from "@/state/users/usersSlice";
 
-const NewUser = () => {
+const NewUser = ({ scrollRef }) => {
     const [name, setName] = useState({
         first: "",
         last: "",
@@ -23,18 +23,20 @@ const NewUser = () => {
     const dispatch = useDispatch();
 
     const handleAddUser = async () => {
-        await fetch("http://localhost:3000/addUser", {
+        const id = crypto.randomUUID();
+        const user = { id, name };
+        console.log(user);
+        dispatch(addUser(user));
+        await fetch("http://localhost:3000/users/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                id: crypto.randomUUID(),
-                name: {
-                    first: name.first,
-                    last: name.last,
-                },
-            }),
+            body: JSON.stringify(user),
+        });
+        scrollRef.current.scroll({
+            top: scrollRef.current.scrollHeight,
+            behavior: "smooth",
         });
     };
 
@@ -86,9 +88,11 @@ const NewUser = () => {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button type="submit" onClick={handleAddUser}>
-                            Done
-                        </Button>
+                        <DialogClose asChild>
+                            <Button type="submit" onClick={handleAddUser}>
+                                Done
+                            </Button>
+                        </DialogClose>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
